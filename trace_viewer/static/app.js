@@ -58,12 +58,24 @@ function showToast(message) {
   showToast.timer = window.setTimeout(() => toast.classList.remove("visible"), 2200);
 }
 
+function staticTraceUrl(id) {
+  const path = id.split("/").map((part) => encodeURIComponent(part)).join("/");
+  return "data/traces/" + path;
+}
+
+async function fetchJson(apiPath, staticPath) {
+  const response = await fetch(apiPath, { cache: "no-store" });
+  if (response.ok) return response.json();
+  if (!staticPath) throw new Error("Request failed");
+  const fallback = await fetch(staticPath, { cache: "no-store" });
+  if (!fallback.ok) throw new Error("Could not read trace data");
+  return fallback.json();
+}
+
 async function loadIndex(preferredId = state.selectedId) {
   setConnection("Loading", "loading");
   try {
-    const response = await fetch("/api/traces", { cache: "no-store" });
-    if (!response.ok) throw new Error("Could not read reports");
-    const payload = await response.json();
+    const payload = await fetchJson("api/traces", "data/index.json");
     state.items = payload.items || [];
     $("#reportLocation").textContent = payload.reports || "Watching reports";
     setConnection("Live", "live");
@@ -134,9 +146,7 @@ async function selectTrace(id) {
   $("#traceView").classList.remove("hidden");
   $("#traceContent").innerHTML = '<div class="loading-panel"><div class="spinner"></div><span>Loading trace</span></div>';
   try {
-    const response = await fetch("/api/trace?id=" + encodeURIComponent(id), { cache: "no-store" });
-    if (!response.ok) throw new Error("Trace not found");
-    state.selected = await response.json();
+    state.selected = await fetchJson("api/trace?id=" + encodeURIComponent(id), staticTraceUrl(id));
     renderTrace();
   } catch (error) {
     showToast(error.message);
