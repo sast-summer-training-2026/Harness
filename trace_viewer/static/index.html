@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Trace Viewer</title>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/subagent.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">◎</div>
+      <div>
+        <div class="brand-name">Trace Viewer</div>
+        <div class="brand-subtitle">Claude request ledger</div>
+      </div>
+    </div>
+    <div class="top-actions">
+      <span id="connectionState" class="connection-state"><span class="status-dot"></span> Connecting</span>
+      <button id="refreshButton" class="icon-button" title="Refresh reports" aria-label="Refresh reports">↻</button>
+    </div>
+  </header>
+
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="sidebar-heading">
+        <div>
+          <span class="eyebrow">Workspace</span>
+          <h1>Sessions</h1>
+        </div>
+        <span id="sessionCount" class="count-badge">0</span>
+      </div>
+      <label class="search-box">
+        <span>⌕</span>
+        <input id="searchInput" type="search" placeholder="Filter sessions or routes" autocomplete="off">
+      </label>
+      <div id="sessionList" class="session-list"></div>
+      <div class="sidebar-footer">
+        <span class="live-dot"></span>
+        <span id="reportLocation">Watching reports</span>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section id="emptyState" class="empty-state">
+        <div class="empty-icon">⌁</div>
+        <h2>Select a trace</h2>
+        <p>Choose a session from the left to inspect the request and response timeline.</p>
+      </section>
+
+      <section id="traceView" class="trace-view hidden">
+        <div class="trace-header">
+          <div class="trace-title-wrap">
+            <div class="trace-kicker"><span id="traceMethod" class="method-badge">POST</span><span id="tracePath">/messages</span></div>
+            <h2 id="traceTitle">Trace</h2>
+            <div id="traceMeta" class="trace-meta"></div>
+          </div>
+          <div class="trace-actions">
+            <button id="copyIdButton" class="quiet-button">Copy ID</button>
+            <button id="rawButton" class="quiet-button">Raw JSON</button>
+          </div>
+        </div>
+
+        <div id="traceStats" class="stat-strip"></div>
+
+        <div class="trace-toolbar">
+          <div class="view-tabs" role="tablist" aria-label="Trace views">
+            <button class="view-tab active" data-view="conversation" role="tab">Conversation</button>
+            <button class="view-tab" data-view="request" role="tab">Request</button>
+            <button class="view-tab" data-view="response" role="tab">Response</button>
+          </div>
+          <div id="traceSequence" class="sequence-control"></div>
+        </div>
+
+        <div id="traceContent" class="trace-content"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/app.js"></script>
+  <script src="/conversation.js"></script>
+  <script src="/subagent.js"></script>
+</body>
+</html>
+

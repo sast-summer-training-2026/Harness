@@ -1,0 +1,63 @@
+.agent-list {
+  border-left: 1px solid var(--line-strong);
+  margin: 0 0 6px 19px;
+  padding: 5px 0 2px 8px;
+}
+.agent-label {
+  color: var(--faint);
+  font-size: 9px;
+  font-weight: 750;
+  letter-spacing: .12em;
+  padding: 4px 10px 6px;
+  text-transform: uppercase;
+}
+.agent-item {
+  align-items: center;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  display: flex;
+  gap: 7px;
+  padding: 8px 8px;
+  text-align: left;
+  width: 100%;
+}
+.agent-item:hover, .agent-item.selected {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--ink);
+}
+.agent-branch {
+  color: var(--faint);
+  font: 10px ui-monospace, monospace;
+  width: 22px;
+}
+.agent-copy { min-width: 0; flex: 1; }
+.agent-copy strong {
+  color: inherit;
+  display: block;
+  font: 600 11px ui-monospace, monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.agent-copy small {
+  color: var(--faint);
+  display: block;
+  font-size: 10px;
+  margin-top: 3px;
+}
+.agent-chevron { color: var(--faint); font-size: 16px; }
+.agent-item.selected .agent-copy strong { color: var(--mint); }
+.actor-tag {
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .03em;
+  padding: 3px 7px;
+}
+.actor-tag.main { color: var(--blue); background: #1b304b; border-color: #345c88; }
+.actor-tag.subagent { color: var(--amber); background: #453522; border-color: #755834; }
+
